@@ -44,7 +44,6 @@ public class UserService {
 
         if (authenticate.isAuthenticated()){
             UserEntity user1 = userRepository.findByUserName(user.getUserName());
-            Object principal = authenticate.getPrincipal();
             return jwtService.getJWTToken(user1.getUserName(), user1.getRole(), user1.getId());
         }else {
             throw new Exception("Username or password not found !");
