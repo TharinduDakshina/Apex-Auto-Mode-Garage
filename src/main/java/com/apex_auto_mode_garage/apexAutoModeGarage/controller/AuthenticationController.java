@@ -36,7 +36,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> userLogin(@RequestBody UserModel userCredentials){
+    public ResponseEntity<String> userLogin(@RequestBody UserModel userCredentials){
         try {
             String token = userService.verifyUser(convertUserModelToUserEntity(userCredentials));
             return ResponseEntity.status(HttpStatus.OK).body(token);
