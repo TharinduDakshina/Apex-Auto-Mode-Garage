@@ -13,19 +13,18 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("api/v1/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
-
-    private final UserService userService;
-
-    private final ModelMapper modelMapper;
     @Autowired
-    public AuthenticationController(UserService userService, ModelMapper modelMapper) {
-        this.userService = userService;
-        this.modelMapper = modelMapper;
-    }
+    private UserService userService;
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     @PostMapping("/register")
     public ResponseEntity<?> userRegistration(@RequestBody UserModel user) {
+        user.setRole("USER");
+        System.out.println(user.toString());
         try {
             UserEntity userEntity = convertUserModelToUserEntity(user);
             UserEntity registeredUser = userService.register(userEntity);
@@ -37,7 +36,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> userLogin(@RequestBody UserModel userCredentials){
+    public ResponseEntity<String> userLogin(@RequestBody UserModel userCredentials){
         try {
             String token = userService.verifyUser(convertUserModelToUserEntity(userCredentials));
             return ResponseEntity.status(HttpStatus.OK).body(token);

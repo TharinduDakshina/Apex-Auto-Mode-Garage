@@ -20,14 +20,13 @@ public class UserEntity {
     private String password;
     @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
-    private String role;
+    @Column()
+    private String role ="USER";
 
     public UserEntity(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.role = "user";
     }
 
     public UserEntity(String userName, String password) {
