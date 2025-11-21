@@ -1,6 +1,7 @@
 package com.apex_auto_mode_garage.apexAutoModeGarage.service;
 
 import com.apex_auto_mode_garage.apexAutoModeGarage.Entity.UserEntity;
+import com.apex_auto_mode_garage.apexAutoModeGarage.model.dto.VerifyUserDto;
 import com.apex_auto_mode_garage.apexAutoModeGarage.repository.UserRepository;
 import org.hibernate.tool.schema.spi.SqlScriptException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,17 @@ public class UserService {
         }
     }
 
-    public String verifyUser(UserEntity user) throws Exception {
+    public VerifyUserDto verifyUser(UserEntity user) throws Exception {
         Authentication authenticate = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword())
         );
 
         if (authenticate.isAuthenticated()){
             UserEntity user1 = userRepository.findByUserName(user.getUserName());
-            return jwtService.getJWTToken(user1.getUserName(), user1.getRole(), user1.getId());
+            String accessToken = jwtService.getJWTToken(user1.getUserName(), user1.getRole(), user1.getId());
+            String refreshToken = jwtService.getRefreshToken(user1.getUserName(), user1.getRole(), user1.getId());
+            return new VerifyUserDto(accessToken,refreshToken);
+
         }else {
             throw new Exception("Username or password not found !");
         }
