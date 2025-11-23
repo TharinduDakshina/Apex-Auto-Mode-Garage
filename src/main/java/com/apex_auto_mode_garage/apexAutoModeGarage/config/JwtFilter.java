@@ -41,7 +41,6 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String requestPath = request.getRequestURI();
-        System.out.println("JwtFilter - Request Path: " + requestPath);
 
         // Skip JWT validation for public endpoints
         if (isPublicUrl(requestPath)) {

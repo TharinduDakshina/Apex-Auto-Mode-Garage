@@ -29,4 +29,6 @@ public class VehicleEntity {
     private double price;
     @Column(nullable = false)
     private String image_url;
+    @Column(nullable = false)
+    private String vehicle_condition;
 }

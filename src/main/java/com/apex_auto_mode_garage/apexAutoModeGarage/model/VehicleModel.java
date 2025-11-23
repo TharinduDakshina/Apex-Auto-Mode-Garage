@@ -16,4 +16,5 @@ public class VehicleModel {
     private double total_runs;
     private double price;
     private String image_url;
+    private String vehicle_condition;
 }

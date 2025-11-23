@@ -31,13 +31,11 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> userRegistration(@RequestBody UserModel user) {
         user.setRole("USER");
-        System.out.println(user.toString());
         try {
             UserEntity userEntity = convertUserModelToUserEntity(user);
             UserEntity registeredUser = userService.register(userEntity);
             return ResponseEntity.ok(registeredUser);
         } catch (IOException e) {
-            System.out.println(e.getLocalizedMessage());
             return ResponseEntity.badRequest().body("User registration process is failed.");
         }
     }
@@ -59,7 +57,6 @@ public class AuthenticationController {
             String newAccessToken = jwtService.getNewAccessToken(refreshToken);
             return ResponseEntity.status(HttpStatus.OK).body(newAccessToken);
         }else {
-            System.out.println("refresh token invalided or expired.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("refresh token invalided.");
         }
 

@@ -76,7 +76,6 @@ public class JWTService {
     private SecretKey getKey() {
         byte[] bytes = Base64.getDecoder().decode(secretKey);
         SecretKey key = Keys.hmacShaKeyFor(bytes);
-        System.out.println("keys is : "+key);
         return key;
     }
 
@@ -97,7 +96,6 @@ public class JWTService {
 
     private <T> T extractClaims(String token, Function<Claims,T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
-        System.out.println("claims  : "+claims);
         return  claimsResolver.apply(claims);
     }
 
